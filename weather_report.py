@@ -1,9 +1,9 @@
 import requests
 from win11toast import toast
 import json
-from scheduler import Scheduler
-import time
-import datetime as dt
+from apscheduler.schedulers.blocking import BlockingScheduler
+
+
 
 
 
@@ -12,7 +12,7 @@ n = toast
 
 
 #Api for the weather
-URL = 'https://api.weather.gov/zones/forecast/NEZ002/forecast'
+URL = 'https://api.weather.gov/zones/forecast/NEZ052/forecast'
 
 
 
@@ -49,17 +49,12 @@ buttons = [
 buttons1 = [
     {'activationType': 'protocol', 'arguments' 'content': 'Close'}]
 
-schedule = Scheduler()
+scheduler = BlockingScheduler()
+scheduler.add_job(get_weather, 'interval', hours=2)
+scheduler.add_job(tonight, 'interval', hours=2)
+scheduler.start()
 
-# Schedule the function to run every 2 hours
-schedule.hourly(dt.time(minute=30, second=15), get_weather)
-schedule.hourly(dt.time(minute=30, second=15), tonight)
 
-# Keep the script running
-while True:
-    schedule.exec_jobs()
-    schedule.exec_jobs()
-    time.sleep(1)
     
 
         
