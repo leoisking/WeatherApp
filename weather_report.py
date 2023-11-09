@@ -16,14 +16,10 @@ URL = 'https://api.weather.gov/zones/forecast/NEZ052/forecast'
 
 
 
-#get the weather information
-response = requests.get(URL)
-forecast = response.json()['properties']
-details = forecast['periods']
-
-    
+   
 #function to get the weather for the day
 def get_weather():
+    details = requests.get(URL).json()['properties']['periods']
     if details:
         period = details[0]
         nameInfo = period['name']
@@ -32,6 +28,7 @@ def get_weather():
 
 # function to get tonights weather
 def tonight():
+    details = requests.get(URL).json()['properties']['periods']
     if details:
         period1 = details[1]
         nameInfo1 = period1['name']
